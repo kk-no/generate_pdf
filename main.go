@@ -10,7 +10,7 @@ import (
 
 func main() {
 	var file *os.File
-	var name = "sample.pdf"
+	var name = "output/sample.pdf"
 
 	file, _ = os.Create(name)
 	defer file.Close()
@@ -21,7 +21,7 @@ func main() {
 	generateTrailer(writer)
 
 	pdf := generate_pdf.PDFinit(name, 1, "font")
-	fmt.Print(pdf)
+	fmt.Println(pdf)
 }
 
 func generateHeader(writer io.Writer) {
@@ -30,12 +30,18 @@ func generateHeader(writer io.Writer) {
 }
 
 func generateBody(writer io.Writer) {
+	// ===============================
+	// root
+	// ===============================
 	fmt.Fprintln(writer, "1 0 obj")
 	fmt.Fprintln(writer, "<<")
 	fmt.Fprintln(writer, "/Pages 2 0 R")
 	fmt.Fprintln(writer, "/Type /Catalog")
 	fmt.Fprintln(writer, ">>")
 	fmt.Fprintln(writer, "endobj")
+	// ===============================
+	// relation
+	// ===============================
 	fmt.Fprintln(writer, "2 0 obj")
 	fmt.Fprintln(writer, "<<")
 	fmt.Fprintln(writer, "/Kids [3 0 R]")
@@ -43,6 +49,9 @@ func generateBody(writer io.Writer) {
 	fmt.Fprintln(writer, "/Type /Pages")
 	fmt.Fprintln(writer, ">>")
 	fmt.Fprintln(writer, "endobj")
+	// ===============================
+	// pdf size
+	// ===============================
 	fmt.Fprintln(writer, "3 0 obj")
 	fmt.Fprintln(writer, "<<")
 	fmt.Fprintln(writer, "/Parent 2 0 R")
@@ -52,6 +61,9 @@ func generateBody(writer io.Writer) {
 	fmt.Fprintln(writer, "/Type /Page")
 	fmt.Fprintln(writer, ">>")
 	fmt.Fprintln(writer, "endobj")
+	// ===============================
+	// font setting
+	// ===============================
 	fmt.Fprintln(writer, "4 0 obj")
 	fmt.Fprintln(writer, "<<")
 	fmt.Fprintln(writer, "/Font")
@@ -65,6 +77,9 @@ func generateBody(writer io.Writer) {
 	fmt.Fprintln(writer, ">>")
 	fmt.Fprintln(writer, ">>")
 	fmt.Fprintln(writer, "endobj")
+	// ===============================
+	// stream
+	// ===============================
 	fmt.Fprintln(writer, "5 0 obj")
 	fmt.Fprintln(writer, "<<")
 	fmt.Fprintln(writer, "/Length 59")
