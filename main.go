@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/kk-no/generte_pdf/generate_pdf"
 )
 
 func main() {
@@ -17,6 +19,9 @@ func main() {
 	generateBody(writer)
 	generateReference(writer)
 	generateTrailer(writer)
+
+	pdf := generate_pdf.PDFinit(name, 1, "font")
+	fmt.Print(pdf)
 }
 
 func generateHeader(writer io.Writer) {
